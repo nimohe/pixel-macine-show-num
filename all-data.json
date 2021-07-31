@@ -1,0 +1,71 @@
+{
+  "code": 0,
+  "num_2": [{
+      "src": "num-2-0.png",
+      "message": "num-2-0",
+      "delay": 180
+    },
+    {
+      "src": "num-2-1.png",
+      "message": "num-2-1",
+      "delay": 90
+    },
+    {
+      "src": "num-2-2.png",
+      "message": "num-2-2",
+      "delay": 90
+    },
+    {
+      "src": "num-2-3.png",
+      "message": "num-2-3",
+      "delay": 400
+    },
+    {
+      "src": "num-2-4.png",
+      "message": "num-2-3",
+      "delay": 90
+    },
+    {
+      "src": "num-2-5.png",
+      "message": "num-2-5",
+      "delay": 90
+    },
+    {
+      "src": "num-2-6.png",
+      "message": "num-2-6",
+      "delay": 180
+    }
+  ],
+  "num_4": [{
+      "src": "num-4-0.png",
+      "message": "num-4-0",
+      "delay": 180
+    },
+    {
+      "src": "num-4-1.png",
+      "message": "num-4-1",
+      "delay": 90
+    },
+    {
+      "src": "num-4-2.png",
+      "message": "num-4-2",
+      "delay": 400
+    },
+    {
+      "src": "num-4-3.png",
+      "message": "num-4-3",
+      "delay": 90
+    },
+    {
+      "src": "num-4-4.png",
+      "message": "num-4-4",
+      "delay": 90
+    },
+    {
+      "src": "num-4-5.png",
+      "message": "num-4-5",
+      "delay": 180
+    }
+  ],
+  "msg": "成功"
+}

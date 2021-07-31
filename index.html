@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>gif</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <meta name="description" content="gif动画在线生成，GIF字幕定制工具，纯前端实现的可以自定义字幕的Gif生成工具" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="gif, 字幕, 前端, canvas, 生成器, 下载, gif表情" />
+    <!-- <meta name="author" content="张鑫旭, zhangxinxu" /> -->
+    <link rel="stylesheet" href="/study/css/demo.css">
+    <link rel="stylesheet" href="//qidian.gtimg.com/lulu/theme/peak/css/common/lib.css">
+    <link rel="stylesheet" href="//qidian.gtimg.com/lulu/theme/peak/css/common/ui.css">
+    <script>
+        
+    </script>
+    <style>
+        .demo {
+            /* width: 600px; */
+            margin: auto;
+            font-family: 'Pingfang SC', 'Microsoft Yahei';
+            font-size: medium;
+        }
+
+        .img-list {
+            margin-left: -30px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .img-x {
+            width: 90px;
+            float: left;
+            /* margin-right: 10px; */
+        }
+
+        .img {
+            height: 80px;
+            max-width: 100%;
+            display: block;
+            object-fit: contain;
+            object-position: left;
+            background: url(./images/tt-bg.gif);
+            background-size: 8px 8px;
+        }
+
+        .tab {
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+        }
+
+        .tab+.tab {
+            margin-left: 30px;
+        }
+
+        .img-input-x {
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .img-input-x>.ui-input {
+            /* width: 224px; */
+            width: 80px;
+            float: left;
+        }
+
+        .img-input-delay {
+            margin-right: 5px;
+            width: 6em;
+            width: 8ch;
+        }
+
+        .img-tips {
+            position: absolute;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, .35);
+            color: #fff;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 120px;
+        }
+
+        .result {
+            margin: 40px 0 10px;
+            text-align: center;
+        }
+
+        .result img {
+            max-width: 100%;
+        }
+
+        .play-list {
+            display: none;
+        }
+
+        .radio-switch {
+            display: none;
+        }
+
+        :checked~.radio-switch {
+            display: block;
+        }
+
+        .upload_box {
+            position: relative;
+        }
+
+        .upload_main {
+            border-width: 1px 1px 2px;
+            border-style: solid;
+            border-color: #ccc #ccc #ddd;
+            background-color: #fbfbfb;
+        }
+
+        .upload_choose {
+            padding: 1em;
+        }
+
+        .upload_drag_area {
+            display: inline-block;
+            width: 72%;
+            padding: 4em 0;
+            margin-left: 1em;
+            border: 1px dashed #ddd;
+            background: #fff url(./images/drag.png) no-repeat 20px center;
+            color: #999;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .upload_drag_hover {
+            border-color: #069;
+            box-shadow: inset 2px 2px 4px rgba(0, 0, 0, .5);
+            color: #333;
+        }
+
+        .upload_preview {
+            border-top: 1px solid #bbb;
+            border-bottom: 1px solid #bbb;
+            background-color: #fff;
+            overflow: hidden;
+            _zoom: 1;
+        }
+
+        .upload_append_list {
+            height: 300px;
+            padding: 0 1em;
+            float: left;
+            position: relative;
+        }
+
+        .upload_delete {
+            position: absolute;
+            right: 0;
+            font-size: 14px;
+            margin-top: -30px;
+        }
+
+        .upload_image {
+            max-height: 250px;
+            padding: 5px;
+        }
+
+        .upload_submit {
+            padding-top: 1em;
+            padding-left: 1em;
+        }
+
+        .upload_submit_btn {
+            display: none;
+            height: 32px;
+            font-size: 14px;
+        }
+
+        .error {
+            text-align: center;
+            color: #cd0000;
+        }
+
+        .down-tips {
+            margin-top: 10px;
+            color: gray;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        :empty+.down-tips {
+            display: none;
+        }
+
+        /* .mt30 {
+            margin-top: 80px;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <!-- <a href="/" class="logo" title="回到鑫空间-鑫生活首页">
+    	<img src="/php/image/zxx_home_logo.png" border="0">
+    </a> -->
+    </div>
+    <div id="main">
+        <h1>前端生成GIF 数字展示</h1>
+        <!-- <a href="http://www.zhangxinxu.com/wordpress/?p=7539" id="back">实现原理和使用说明 »</a> -->
+        <div id="body" class="light">
+            <div id="content" class="show">
+                <!-- <h3>前端生成GIF 数字展示</h3> -->
+                <form id="form" class="demo">
+                    <div class="mt20">
+                        <div class="ui-input">
+                            <input id="input-num" name="message" class="jsMsg" placeholder="第1步:请输入数字(目前只支持2、4数字)">
+                        </div>
+                        <input type="radio" id="radioModule" name="radio" value="module">
+                        <label for="radioModule" class="ui-radio mr5"></label><label for="radioModule"
+                            class="ml2"></label>
+                        <div class="mt10 pl30 radio-switch">
+                            <div>
+                                <span class="tab">
+                                    <input type="radio" id="radioTpl1" name="template" value="num_2"><label
+                                        for="radioTpl1" class="ui-radio mr5"></label><label
+                                        for="radioTpl1">第2步:输入好数字后，请点击我。</label>
+                                </span>
+                            </div>
+                            <div id="num_2ListX" class="play-list jsPlayList"></div>
+                            <div id="foodListX" class="play-list jsPlayList"></div>
+                            <div id="windListX" class="play-list jsPlayList"></div>
+                        </div>
+                    </div>
+                    <!-- <div class="mt20">
+                    <input type="radio" id="radioCustom" name="radio" value="custom">
+                    <label for="radioCustom" class="ui-radio mr5"></label><label for="radioCustom" class="ml2">自己DIY GIF内容</label>
+
+                    <div class="mt10 pl30 radio-switch">
+                        <div class="upload_box">
+                            <div class="upload_main">
+                                <div class="upload_choose">
+                                    <label for="fileImage" id="upImgBtn" class="ui-button ui-button-primary">上传序列图片</label>
+                                    <input id="fileImage" type="file" class="clip" multiple accept="image/jpeg,image/png,image/gif" />
+                                    <span id="fileDragArea" class="upload_drag_area">或者将图片拖到此处</span>
+                                </div>
+                                <div id="preview" class="upload_preview"></div>
+                            </div>
+                            <div class="upload_submit">
+                                <button type="button" id="fileSubmit" class="upload_submit_btn">确认上传图片</button>
+                            </div>
+                            <div id="uploadInf" class="upload_inf"></div>
+                        </div>
+                    </div>
+                </div> -->
+                    <script>
+                        var storeGifRadio = localStorage.storeGifRadio;
+                        if (storeGifRadio) {
+                            document.getElementById(storeGifRadio).checked = true;
+                        } else {
+                            document.getElementById('radioModule').checked = true;
+                            localStorage.storeGifRadio = 'radioModule';
+                        }
+                    </script>
+
+                    <!-- 最后的生成按钮 -->
+                    <div class="mt30 tc">
+                        <input type="submit" id="submitBtn" class="ui-button ui-button-warning" value="第3步:生成GIF图片">
+                    </div>
+
+                    <!-- 这是生成效果图 -->
+                    <div id="result" class="result"></div>
+                    <p class="down-tips">右键另存图片即可下载</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script id="tplList" type="text/template">
+        <div class="img-list">
+    <div class="img-x"><img src="./images/$value$/$src$" class="img img-$value$"></div>
+    <div class="img-input-x">
+        <div class="ui-input"><input name="message" placeholder="输入对话信息" value="$message$"></div>
+        <div class="ovh">
+            <span class="l mt5 ml20">延时：</span>
+            <input type="number" name="delay" min="0" step="1" size="4" class="ui-input img-input-delay" value="$delay$">ms
+        </div>
+    </div>
+</div>
+</script>
+
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/gif.js"></script>
+    <script src="./main-min.js"></script>
+    <div class="topa" style="top: 0; height: 60px;right:20px;left:auto;">
+        <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+        <!-- 468x60, 横幅广告 -->
+        <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px"
+            data-ad-client="ca-pub-0090627341039040" data-ad-slot="6836958449"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <script>
+        /* var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-11205167-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})(); */
+    </script>
+    <script>
+        /* var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?48d8e938d5365a4cb0fc9e65d945018e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})(); */
+        // (function(){
+        //   var bp = document.createElement('script');
+        //   var curProtocol = window.location.protocol.split(':')[0];
+        //   if (curProtocol === 'https'){
+        //     bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        //   } else{
+        //     bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        //   }
+        //   var s = document.getElementsByTagName("script")[0];
+        //   s.parentNode.insertBefore(bp, s);
+        // })();
+    </script>
+
+    </div>
+</body>
+
+</html>

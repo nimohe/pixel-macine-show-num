@@ -1,0 +1,41 @@
+{
+  "code": 0,
+  "data": [
+    {
+      "src": "num-2-0.png",
+      "message": "num-2-0",
+      "delay": 180
+    },
+    {
+      "src": "num-2-1.png",
+      "message": "num-2-1",
+      "delay": 90
+    },
+    {
+      "src": "num-2-2.png",
+      "message": "num-2-2",
+      "delay": 90
+    },
+    {
+      "src": "num-2-3.png",
+      "message": "num-2-3",
+      "delay": 400
+    },
+    {
+      "src": "num-2-4.png",
+      "message": "num-2-3",
+      "delay": 90
+    },
+    {
+      "src": "num-2-5.png",
+      "message": "num-2-5",
+      "delay": 90
+    },
+    {
+      "src": "num-2-6.png",
+      "message": "num-2-6",
+      "delay": 180
+    }
+  ],
+  "msg": "成功"
+}
